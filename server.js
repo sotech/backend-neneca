@@ -1,4 +1,5 @@
 require('./src/utils/envConfig')
+require('./src/utils/mongoDB')
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
