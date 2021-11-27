@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const productoController = require("../controllers/productoController.js");
 
-//GET ALL
+router.get('/obtener', productoController.obtenerProductos)
 router.post("/agregar", productoController.agregarProducto);
 //PUT
 //DELETE
