@@ -28,8 +28,12 @@ exports.agregarProducto = async payload => {
 exports.obtenerProductos = async () => {
   const respuesta = {}
   const productos = await Producto.find({})
+  console.log(productos)
 
-  if (productos) {
-    
+  if (productos.length) {
+    respuesta.productos = productos.data
+  } else {
+    respuesta.error = 'No hay productos cargados'
   }
+  return respuesta
 }

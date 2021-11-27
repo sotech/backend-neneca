@@ -19,12 +19,12 @@ exports.agregarProducto = async (req, res) => {
 exports.obtenerProductos = async (req, res) => {
   try {
     const respuesta = await productoAPI.obtenerProductos()
-    if (respuesta.productos.length) {
+    if (respuesta.productos) {
       res.status(200).json({ data: respuesta.productos })
     } else {
-      res.status(400).json({ error: respuesta.errores })
+      res.status(400).json({ error: respuesta.error })
     }
   } catch (err) {
-    res.satus(500).json({ error: err })
+    res.status(500).json({ error: err })
   }
 }
