@@ -6,7 +6,7 @@ const ProductoValidacion = require('../api/productoValidaciones');
 exports.agregarProducto = async payload => {
   const validacion = ProductoValidacion.validarProducto(payload)
   const respuesta = {}
-  if(validacion.valido){
+  if (validacion.valido) {
     const { nombre, descripcion, thumbnail, stock } = payload;
     const producto = {
       timestamp: new Date(),
@@ -18,7 +18,7 @@ exports.agregarProducto = async payload => {
     const nuevoProducto = await Producto.create(producto);
     respuesta.creado = true;
     respuesta.producto = nuevoProducto;
-  }else{
+  } else {
     respuesta.creado = false;
     respuesta.errores = validacion.errores;
   }
@@ -34,5 +34,49 @@ exports.obtenerProductos = async () => {
   } else {
     respuesta.error = 'No hay productos cargados'
   }
+  return respuesta
+}
+
+exports.actualizarProducto = async (payload, id) => {
+  const respuesta = {}
+  const validacion = ProductoValidacion.validarProducto(payload)
+  try {
+    let productoActualizado = await Producto.updateOne({ "_id": id },
+      {
+        $set: { ...payload }
+      })
+    if (validacion.valido) {
+      productoActualizado = {
+        timestamp: new Date(),
+        ...productoActualizado
+      }
+      respuesta.actualizado = true
+      respuesta.producto = productoActualizado
+    } else {
+      respuesta.actualizado = false
+      respuesta.error = validacion.errores
+    }
+
+  } catch (err) {
+    respuesta.actualizado = false
+    respuesta.error = { error: err }
+  }
+
+
+  return respuesta
+}
+
+exports.eliminarProducto = async id => {
+  const respuesta = {}
+
+  try {
+
+    const productoEliminado = await Producto.deleteOne({ "_id": id })
+    respuesta.eliminado = true
+  } catch (err) {
+    respuesta.eliminado = false
+    respuesta.error = { error: err }
+  }
+
   return respuesta
 }
