@@ -80,3 +80,16 @@ exports.eliminarProducto = async id => {
 
   return respuesta
 }
+
+exports.buscarProductos = async query => {
+  const respuesta = {}
+ 
+  try {
+    const resultado = await Producto.find({ nombre: new RegExp(`${query}`, 'i') }).exec()
+
+    respuesta.resultado = resultado
+  } catch (err) {
+    respuesta.error = { error: err }
+  }
+  return respuesta
+}
