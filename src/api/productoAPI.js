@@ -1,10 +1,10 @@
 //Aqui definir como se devuelve la info traida desde mongo
 
 const Producto = require("../models/productoModel");
-const ProductoValidacion = require('../api/productoValidaciones');
+const validaciones = require('../api/validaciones');
 
 exports.agregarProducto = async payload => {
-  const validacion = ProductoValidacion.validarProducto(payload)
+  const validacion = validaciones.validarProducto(payload)
   const respuesta = {}
   if (validacion.valido) {
     const { nombre, descripcion, thumbnail, stock } = payload;
@@ -39,13 +39,14 @@ exports.obtenerProductos = async () => {
 
 exports.actualizarProducto = async (payload, id) => {
   const respuesta = {}
-  const validacion = ProductoValidacion.validarProducto(payload)
+  const validacion = validaciones.validarProducto(payload)
   try {
-    let productoActualizado = await Producto.updateOne({ "_id": id },
-      {
-        $set: { ...payload }
-      })
+    
     if (validacion.valido) {
+      let productoActualizado = await Producto.updateOne({ "_id": id },
+        {
+          $set: { ...payload }
+        })
       productoActualizado = {
         timestamp: new Date(),
         ...productoActualizado

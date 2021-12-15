@@ -50,7 +50,7 @@ exports.eliminarProducto = async (req, res) => {
 
   try {
     const respuesta = await productoAPI.eliminarProducto(id)
-    if (respuesta.actualizado) {
+    if (respuesta.eliminado) {
       res.status(200).json({msg: 'Producto eliminado'})
     } else {
       res.status(400).json({error: respuesta.error})
