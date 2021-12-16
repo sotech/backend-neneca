@@ -85,7 +85,7 @@ exports.buscarProductos = async query => {
   const respuesta = {}
  
   try {
-    const resultado = await Producto.find({ nombre: new RegExp(`${query}`, 'i') }).exec()
+    const resultado = await Producto.find({$or:[ {nombre: new RegExp(`${query}`, 'i')}, {tags: query} ]}).exec()
 
     respuesta.resultado = resultado
   } catch (err) {
