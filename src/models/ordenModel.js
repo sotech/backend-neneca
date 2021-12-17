@@ -14,6 +14,9 @@ const itemSchema = mongoose.Schema({
 const ordenSchema = mongoose.Schema({
   timestamp: String,
   estado:String,
+  nombre_comprador:String,
+  direccion_envio:String,
+  email_comprador:String,
   pedidos:[itemSchema]
 });
 
