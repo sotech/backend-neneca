@@ -35,5 +35,18 @@ exports.validarOrden = (data) =>{
       validacion.errores += "El estado no es un estado valido"
     }
   }
+  //Datos personales
+  if(!data.nombre_comprador){
+    validacion.valido = false;
+    validacion.errores += "Falta ingresar nombre del comprador"
+  }
+  if(!data.direccion_envio){
+    validacion.valido = false;
+    validacion.errores += "Falta ingresar direccion de envio"
+  }
+  if (!data.email_comprador) {
+    validacion.valido = false;
+    validacion.errores += "Falta ingresar email del comprador"
+  }
   return validacion
 }
