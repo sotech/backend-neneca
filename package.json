@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/sotech/backend-neneca.git"
   },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
