@@ -1,6 +1,7 @@
 const Usuario = require('../models/usuarioModel')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validaciones = require('./validaciones');
 
 exports.login = async(user) => {
   const respuesta = {
@@ -14,8 +15,7 @@ exports.login = async(user) => {
     respuesta.error = 'Error al logear. Usuario no encontrado'
     return respuesta;
   }
-  //Todo: Aplicar bcrypt para comparar
-  if(userDB.password != user.password){
+  if (!await bcrypt.compare(user.password,userDB.password)){
     respuesta.logeado = false;
     respuesta.error = 'Error al logear. Contraseña incorrecta'
     return respuesta;
@@ -39,16 +39,26 @@ exports.verificarToken = async(token) =>{
   return decode
 }
 
-exports.register = async(user) =>{
+exports.register = async(data) =>{
   const respuesta = {};
-  //Todo: Aplicar bcrypt para guardar la contraseña
-  const usuario = await Usuario.create(user);
-  if(usuario){
-    respuesta.creado = true;
-    respuesta.data = usuario;
+  const validacion = validaciones.validarUsuario(data);
+  if(validacion.valido){
+    const userData = {
+      username:data.username,
+      email:data.email
+    }
+    userData.password = await bcrypt.hash(data.password,10)
+    const usuario = await Usuario.create(userData);
+    if(usuario){
+      respuesta.creado = true;
+      respuesta.data = usuario;
+    }else{
+      respuesta.creado = false;
+      respuesta.error = 'Ocurrio un error al crear el usuario'
+    }
   }else{
     respuesta.creado = false;
-    respuesta.error = 'Ocurrio un error al crear el usuario'
+    respuesta.error = validacion.errores;
   }
   return respuesta;
 }
