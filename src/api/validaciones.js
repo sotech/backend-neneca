@@ -17,6 +17,26 @@ exports.validarProducto = (data) => {
   return validacion
 }
 
+exports.validarUsuario = (data) => {
+  const validacion = {
+    errores: "",
+    valido: true
+  };
+  if(!data.username){
+    validacion.valido = false;
+    validacion.errores += "Falta un nombre de usuario."
+  } 
+  if (!data.email) {
+    validacion.valido = false;
+    validacion.errores += "Falta un email de usuario."
+  } 
+  if (!data.password) {
+    validacion.valido = false;
+    validacion.errores += "Falta una contraseña de usuario."
+  } 
+  return validacion
+}
+
 exports.validarOrden = (data) =>{
   const validacion = {
     errores: "",
