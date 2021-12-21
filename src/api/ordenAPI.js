@@ -38,6 +38,21 @@ exports.agregarOrden = async payload => {
   return respuesta
 }
 
+exports.obtenerOrden = async (id) => {
+  const respuesta = {}
+  const orden = await Orden.findById(id).populate({
+    path: 'pedidos.item',
+    model: 'Producto'
+  })
+
+  if (orden) {
+    respuesta.orden = orden
+  } else {
+    respuesta.error = 'No se encontro la orden con id: ' + id
+  }
+  return respuesta
+}
+
 exports.obtenerOrdenes = async () => {
   const respuesta = {}
   const ordenes = await Orden.find({}).populate({
