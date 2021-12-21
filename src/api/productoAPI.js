@@ -41,7 +41,7 @@ exports.actualizarProducto = async (payload, id) => {
   const respuesta = {}
   const validacion = validaciones.validarProducto(payload)
   try {
-    
+
     if (validacion.valido) {
       let productoActualizado = await Producto.updateOne({ "_id": id },
         {
@@ -84,13 +84,27 @@ exports.eliminarProducto = async id => {
 
 exports.buscarProductos = async query => {
   const respuesta = {}
- 
+
   try {
-    const resultado = await Producto.find({$or:[ {nombre: new RegExp(`${query}`, 'i')}, {tags: query} ]}).exec()
+    const resultado = await Producto.find({ $or: [{ nombre: new RegExp(`${query}`, 'i') }, { tags: query }] }).exec()
 
     respuesta.resultado = resultado
   } catch (err) {
     respuesta.error = { error: err }
   }
   return respuesta
+}
+
+exports.actualizarStock = async (id, cantidad) => {
+
+  try {
+    const producto = await Producto.findOne({ "_id": id })
+
+    const productoActualizado = await Producto.updateOne({ "_id": id }, {
+      $set: { stock: producto.stock - cantidad }
+    })
+  } catch (err) {
+ console.log(err)
+  }
+
 }
