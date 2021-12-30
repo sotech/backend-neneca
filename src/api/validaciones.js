@@ -1,4 +1,4 @@
-const ORDEN_ESTADOS = require('./ordenEstados')
+const {estadoValido} = require('./ordenEstados')
 
 exports.validarProducto = (data) => {
   const validacion = {
@@ -7,11 +7,15 @@ exports.validarProducto = (data) => {
   };
   //Nombre
   if(!data.nombre){
-    validacion.errores += "NOMBRE faltante";
+    validacion.errores += "Falta nombre";
+    validacion.valido = false;
+  }
+  if (!data.precio) {
+    validacion.errores += "Falta precio";
     validacion.valido = false;
   }
   if(!data.stock){
-    validacion.errores += "STOCK faltante";
+    validacion.errores += "Falta stock";
     validacion.valido = false;
   }
   return validacion
@@ -24,15 +28,15 @@ exports.validarUsuario = (data) => {
   };
   if(!data.username){
     validacion.valido = false;
-    validacion.errores += "Falta un nombre de usuario."
+    validacion.errores += "Falta username"
   } 
   if (!data.email) {
     validacion.valido = false;
-    validacion.errores += "Falta un email de usuario."
+    validacion.errores += "Falta email"
   } 
   if (!data.password) {
     validacion.valido = false;
-    validacion.errores += "Falta una contraseña de usuario."
+    validacion.errores += "Falta password"
   } 
   return validacion
 }
@@ -44,13 +48,8 @@ exports.validarOrden = (data) =>{
   };
   //Estado
   if(data.estado){
-    let existe = false
-    for(const e in ORDEN_ESTADOS){
-      if (ORDEN_ESTADOS[e] === data.estado){
-        existe = true
-      }
-    }
-    if(!existe){
+    //Validar estado unicamente si es que existe
+    if(!estadoValido(data.estado)){
       validacion.valido = false;
       validacion.errores += "El estado no es un estado valido"
     }
@@ -58,15 +57,19 @@ exports.validarOrden = (data) =>{
   //Datos personales
   if(!data.nombre_comprador){
     validacion.valido = false;
-    validacion.errores += "Falta ingresar nombre del comprador"
+    validacion.errores += "Falta nombre_comprador"
   }
   if(!data.direccion_envio){
     validacion.valido = false;
-    validacion.errores += "Falta ingresar direccion de envio"
+    validacion.errores += "Falta direccion_envio"
   }
   if (!data.email_comprador) {
     validacion.valido = false;
-    validacion.errores += "Falta ingresar email del comprador"
+    validacion.errores += "Falta email_comprador"
+  }
+  if (!data.pedidos){
+    validacion.valido = false;
+    validacion.errores += "Falta pedidos"
   }
   return validacion
 }
