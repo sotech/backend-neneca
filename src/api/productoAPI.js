@@ -39,7 +39,6 @@ exports.obtenerProductos = async () => {
 
 exports.actualizarProducto = async (payload, id) => {
   const respuesta = {}
-  const validacion = validaciones.validarProducto(payload)
   try {
     
     if (validacion.valido) {

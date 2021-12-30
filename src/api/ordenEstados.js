@@ -4,4 +4,14 @@ const ESTADOS = {
   EN_PROGRESO:"EN PROGRESO"
 }
 
-module.exports = ESTADOS
+const estadoValido(estado){
+  let existe = false
+  for (const e in ESTADOS) {
+    if (ESTADOS[e] === estado) {
+      existe = true
+    }
+  }
+  return existe
+}
+
+module.exports = {ESTADOS,estadoValido}
