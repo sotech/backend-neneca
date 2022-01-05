@@ -7,12 +7,13 @@ exports.agregarProducto = async payload => {
   const validacion = validaciones.validarProducto(payload)
   const respuesta = {}
   if (validacion.valido) {
-    const { nombre, descripcion, thumbnail, stock } = payload;
+    const { nombre, descripcion, thumbnail, stock, categoria } = payload;
     const producto = {
       timestamp: new Date(),
       nombre,
       descripcion,
       thumbnail,
+      categoria,
       stock
     };
     const nuevoProducto = await Producto.create(producto);

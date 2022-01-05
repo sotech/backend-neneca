@@ -4,7 +4,7 @@ const ESTADOS = {
   EN_PROGRESO:"EN PROGRESO"
 }
 
-const estadoValido(estado){
+const estadoValido= (estado) => {
   let existe = false
   for (const e in ESTADOS) {
     if (ESTADOS[e] === estado) {
