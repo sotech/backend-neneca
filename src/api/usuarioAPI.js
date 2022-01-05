@@ -65,4 +65,5 @@ exports.register = async (data) => {
     respuesta.creado = false;
     respuesta.error = "Ocurrio un error al crear el usuario";
   }
+  return respuesta;
 };
