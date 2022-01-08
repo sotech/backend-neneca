@@ -8,7 +8,7 @@ exports.agregarProducto = async (req, res) => {
   try {
     const payload = req.body;
     if(req.file){
-      payload.img = {
+      payload.image = {
         data: fs.readFileSync(path.join(process.cwd() + '/uploads/' + req.file.filename)),
         contentType: 'image/png'
       }
