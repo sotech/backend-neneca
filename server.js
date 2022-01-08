@@ -9,6 +9,7 @@ const ordenRoutes = require('./src/routes/ordenRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const mainRoutes = require('./src/routes/mainRoutes')
 
+app.use(express.urlencoded({extended:false}))
 app.use(express.json());
 app.use(morgan('dev'));
 

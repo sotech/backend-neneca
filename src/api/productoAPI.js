@@ -3,18 +3,20 @@
 const Producto = require("../models/productoModel");
 const validaciones = require('../api/validaciones');
 
+
 exports.agregarProducto = async payload => {
   const validacion = validaciones.validarProducto(payload)
   const respuesta = {}
   if (validacion.valido) {
-    const { nombre, descripcion, thumbnail, stock, categoria } = payload;
+    const { nombre, descripcion, thumbnail, stock, categoria, image } = payload;
     const producto = {
       timestamp: new Date(),
       nombre,
       descripcion,
       thumbnail,
       categoria,
-      stock
+      stock,
+      image
     };
     const nuevoProducto = await Producto.create(producto);
     respuesta.creado = true;
