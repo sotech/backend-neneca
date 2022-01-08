@@ -1,10 +1,18 @@
 //Usar el API para resolver los distintos endpoints
 
 const productoAPI = require('../api/productoAPI')
+const fs = require('fs');
+const path = require('path');
 
 exports.agregarProducto = async (req, res) => {
   try {
     const payload = req.body;
+    if(req.file){
+      payload.img = {
+        data: fs.readFileSync(path.join(process.cwd() + '/uploads/' + req.file.filename)),
+        contentType: 'image/png'
+      }
+    }
     const respuesta = await productoAPI.agregarProducto(payload);
     if (respuesta.creado) {
       res.status(201).json({ msg: 'Producto agregado', data: respuesta.producto })

@@ -6,6 +6,11 @@ const productoSchema = mongoose.Schema({
   descripcion: String,
   categoria: String,
   thumbnail: String,
+  image:
+    {
+        data: Buffer,
+        contentType: String
+    },
   stock: Number,
   tags: Array
 });
