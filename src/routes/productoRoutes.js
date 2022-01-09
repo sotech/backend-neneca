@@ -5,8 +5,8 @@ const upload = require('../utils/multer');
 const productoController = require("../controllers/productoController");
 
 router.get('/obtener', productoController.obtenerProductos);
-router.post('/agregar', verificarToken, upload.single('image'), productoController.agregarProducto);
-router.put('/actualizar/:id', verificarToken, productoController.actualizarProducto);
+router.post('/agregar', upload.single('image'), productoController.agregarProducto);
+router.put('/actualizar/:id', upload.single('image'), productoController.actualizarProducto);
 router.delete('/eliminar/:id', verificarToken, productoController.eliminarProducto);
 router.get('/buscar', productoController.buscarProductos);
 
