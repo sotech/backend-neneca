@@ -2,7 +2,6 @@
 
 const Orden = require("../models/ordenModel");
 const productoAPI = require("./productoAPI")
-const Producto = require("../models/productoModel")
 const validaciones = require("./validaciones");
 const ORDEN_ESTADOS = require('./ordenEstados');
 

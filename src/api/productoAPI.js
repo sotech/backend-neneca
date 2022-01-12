@@ -10,23 +10,16 @@ exports.agregarProducto = async (payload) => {
     const {
       nombre,
       descripcion,
-      thumbnail,
-      stock,
       categoria,
-      image,
-      precio,
       tags,
     } = payload;
     const producto = {
       timestamp: new Date(),
       nombre: nombre ? nombre : null,
       descripcion: descripcion ? descripcion : null,
-      thumbnail: thumbnail ? thumbnail : null,
       categoria: categoria ? categoria : null,
-      stock: stock ? stock : null,
-      image: image ? image : null,
-      precio: precio ? precio : null,
       tags: tags ? tags : null,
+      variaciones: []
     };
     const nuevoProducto = await Producto.create(producto);
     respuesta.creado = true;
@@ -75,7 +68,6 @@ exports.actualizarProducto = async (payload, id) => {
 
 exports.eliminarProducto = async (id) => {
   const respuesta = {};
-
   try {
     const productoEliminado = await Producto.deleteOne({ _id: id });
     respuesta.eliminado = true;
@@ -102,6 +94,10 @@ exports.buscarProductos = async (query) => {
   return respuesta;
 };
 
+
+/*
+Actualizar para las variaciones
+
 exports.actualizarStock = async (id, cantidad) => {
   try {
     const producto = await Producto.findOne({ _id: id });
@@ -116,3 +112,4 @@ exports.actualizarStock = async (id, cantidad) => {
     console.log(err);
   }
 };
+*/

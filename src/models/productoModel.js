@@ -1,18 +1,26 @@
 const mongoose = require("mongoose");
+
 const productoSchema = mongoose.Schema({
   timestamp: String,
   nombre: String,
-  precio: Number,
   descripcion: String,
   categoria: String,
-  thumbnail: String,
-  image:
-    {
-        data: Buffer,
-        contentType: String
-    },
-  stock: Number,
-  tags: Array
+  tags: Array,
+  variaciones: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Variacion'
+  }]
 });
+
+productoSchema.pre('deleteOne', (next) => {
+  const productoId = this.getQuery()["_id"];
+  mongoose.model("Variacion").deleteMany({'producto':productoId},(err,result) => {
+    if(err){
+      console.log(err);
+      next(err)
+    }
+    next()
+  })
+})
 const Producto = mongoose.model("Producto", productoSchema);
 module.exports = Producto;
