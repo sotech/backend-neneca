@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const itemSchema = mongoose.Schema({
   item: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Producto'
+    ref: 'Variacion'
   },
   cantidad: {
     type: Number,
