@@ -10,7 +10,20 @@ exports.validarProducto = (data) => {
     validacion.errores += "Falta nombre";
     validacion.valido = false;
   }
-  if (!data.precio) {
+  return validacion
+}
+
+exports.validarVariacion = data => {
+  const validacion = {
+    errores:"",
+    valido:true
+  };
+  //Nombre
+  if(!data.nombre){
+    validacion.errores += "Falta nombre";
+    validacion.valido = false;
+  }
+  if(!data.precio){
     validacion.errores += "Falta precio";
     validacion.valido = false;
   }
@@ -20,7 +33,7 @@ exports.validarProducto = (data) => {
   }
   return validacion
 }
-
+ 
 exports.validarUsuario = (data) => {
   const validacion = {
     errores: "",
@@ -51,21 +64,21 @@ exports.validarOrden = (data) =>{
     //Validar estado unicamente si es que existe
     if(!estadoValido(data.estado)){
       validacion.valido = false;
-      validacion.errores += "El estado no es un estado valido"
+      validacion.errores += "El estado enviado no es un estado valido"
     }
   }
   //Datos personales
   if(!data.nombre_comprador){
     validacion.valido = false;
-    validacion.errores += "Falta nombre_comprador"
+    validacion.errores += "Falta nombreComprador"
   }
   if(!data.direccion_envio){
     validacion.valido = false;
-    validacion.errores += "Falta direccion_envio"
+    validacion.errores += "Falta direccionEnvio"
   }
   if (!data.email_comprador) {
     validacion.valido = false;
-    validacion.errores += "Falta email_comprador"
+    validacion.errores += "Falta emailComprador"
   }
   if (!data.pedidos){
     validacion.valido = false;

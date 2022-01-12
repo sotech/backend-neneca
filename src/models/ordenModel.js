@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const itemSchema = mongoose.Schema({
   item: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Producto'
+    ref: 'Variacion'
   },
   cantidad: {
     type: Number,
@@ -14,9 +14,9 @@ const itemSchema = mongoose.Schema({
 const ordenSchema = mongoose.Schema({
   timestamp: String,
   estado:String,
-  nombre_comprador:String,
-  direccion_envio:String,
-  email_comprador:String,
+  nombreComprador:String,
+  direccionEnvio:String,
+  emailComprador:String,
   pedidos:[itemSchema]
 });
 

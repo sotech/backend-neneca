@@ -1,18 +1,16 @@
 const mongoose = require("mongoose");
+
 const productoSchema = mongoose.Schema({
   timestamp: String,
   nombre: String,
-  precio: Number,
   descripcion: String,
   categoria: String,
-  thumbnail: String,
-  image:
-    {
-        data: Buffer,
-        contentType: String
-    },
-  stock: Number,
-  tags: Array
+  tags: Array,
+  variaciones: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Variacion'
+  }]
 });
+
 const Producto = mongoose.model("Producto", productoSchema);
 module.exports = Producto;

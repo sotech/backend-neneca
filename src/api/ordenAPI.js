@@ -1,8 +1,7 @@
 //Aqui definir como se devuelve la info traida desde mongo
 
 const Orden = require("../models/ordenModel");
-const productoAPI = require("./productoAPI")
-const Producto = require("../models/productoModel")
+const variacionAPI = require("./variacionAPI")
 const validaciones = require("./validaciones");
 const ORDEN_ESTADOS = require('./ordenEstados');
 
@@ -20,7 +19,7 @@ exports.agregarOrden = async payload => {
     try {
       const nuevaOrden = await Orden.create(orden);
       nuevaOrden.pedidos.forEach(async pedido => {
-        const stockActualizado = await productoAPI.actualizarStock(pedido.item, pedido.cantidad)
+        const stockActualizado = await variacionAPI.actualizarStock(pedido.item, pedido.cantidad)
       })
       respuesta.creado = true;
       respuesta.orden = nuevaOrden;
@@ -42,7 +41,7 @@ exports.obtenerOrden = async (id) => {
   const respuesta = {}
   const orden = await Orden.findById(id).populate({
     path: 'pedidos.item',
-    model: 'Producto'
+    model: 'Variacion'
   })
 
   if (orden) {
@@ -57,7 +56,7 @@ exports.obtenerOrdenes = async () => {
   const respuesta = {}
   const ordenes = await Orden.find({}).populate({
     path: 'pedidos.item',
-    model: 'Producto'
+    model: 'Variacion'
   })
 
   if (ordenes.length) {
@@ -104,7 +103,7 @@ exports.eliminarOrden = async id => {
     const orden = await Orden.findOne({ "_id": id })
     const ordenEliminada = await Orden.deleteOne({ "_id": id })
     orden.pedidos.forEach(async pedido => {
-      const stockActualizado = await productoAPI.actualizarStock(pedido.item, -pedido.cantidad)
+      const stockActualizado = await variacionAPI.actualizarStock(pedido.item, -pedido.cantidad)
     })
     respuesta.eliminado = true
   } catch (err) {

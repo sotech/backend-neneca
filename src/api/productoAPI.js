@@ -2,31 +2,20 @@
 
 const Producto = require("../models/productoModel");
 const validaciones = require("../api/validaciones");
+const variacionAPI = require("../api/variacionAPI");
 
 exports.agregarProducto = async (payload) => {
   const validacion = validaciones.validarProducto(payload);
   const respuesta = {};
   if (validacion.valido) {
-    const {
-      nombre,
-      descripcion,
-      thumbnail,
-      stock,
-      categoria,
-      image,
-      precio,
-      tags,
-    } = payload;
+    const { nombre, descripcion, categoria, tags } = payload;
     const producto = {
       timestamp: new Date(),
       nombre: nombre ? nombre : null,
       descripcion: descripcion ? descripcion : null,
-      thumbnail: thumbnail ? thumbnail : null,
       categoria: categoria ? categoria : null,
-      stock: stock ? stock : null,
-      image: image ? image : null,
-      precio: precio ? precio : null,
       tags: tags ? tags : null,
+      variaciones: [],
     };
     const nuevoProducto = await Producto.create(producto);
     respuesta.creado = true;
@@ -75,13 +64,22 @@ exports.actualizarProducto = async (payload, id) => {
 
 exports.eliminarProducto = async (id) => {
   const respuesta = {};
-
   try {
-    const productoEliminado = await Producto.deleteOne({ _id: id });
-    respuesta.eliminado = true;
+    const producto = await Producto.findById(id);
+    if (producto) {
+      //Eliminar todas las variaciones
+      producto.variaciones.forEach(async (v) => {
+        await variacionAPI.eliminarVariacion(v._id);
+      });
+      const productoEliminado = await Producto.deleteOne({ _id: id });
+      respuesta.eliminado = true;
+    } else {
+      respuesta.eliminado = false;
+      respuesta.error = "No se encontro el producto";
+    }
   } catch (err) {
     respuesta.eliminado = false;
-    respuesta.error = { error: err };
+    respuesta.error = err;
   }
 
   return respuesta;
@@ -100,19 +98,4 @@ exports.buscarProductos = async (query) => {
     respuesta.error = { error: err };
   }
   return respuesta;
-};
-
-exports.actualizarStock = async (id, cantidad) => {
-  try {
-    const producto = await Producto.findOne({ _id: id });
-
-    const productoActualizado = await Producto.updateOne(
-      { _id: id },
-      {
-        $set: { stock: producto.stock - cantidad },
-      }
-    );
-  } catch (err) {
-    console.log(err);
-  }
 };
