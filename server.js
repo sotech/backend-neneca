@@ -3,6 +3,7 @@ require('./src/utils/mongoDB')
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const cors = require('cors');
 const port = process.env.PORT || 8080;
 const productoRoutes = require('./src/routes/productoRoutes')
 const ordenRoutes = require('./src/routes/ordenRoutes')
@@ -12,6 +13,7 @@ const mainRoutes = require('./src/routes/mainRoutes')
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
+app.use(cors())
 app.use(morgan('dev'));
 
 //Rutas
