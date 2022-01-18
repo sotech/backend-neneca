@@ -4,6 +4,7 @@ const {verificarToken} = require('../controllers/usuarioController');
 const productoController = require("../controllers/productoController");
 
 router.get('/obtener', productoController.obtenerProductos);
+router.get('/obtener/:id', productoController.obtenerProductoPorId);
 router.post('/agregar', verificarToken, productoController.agregarProducto);
 router.put('/actualizar/:id', verificarToken, productoController.actualizarProducto);
 router.delete('/eliminar/:id', verificarToken, productoController.eliminarProducto);

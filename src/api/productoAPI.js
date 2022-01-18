@@ -85,6 +85,21 @@ exports.eliminarProducto = async (id) => {
   return respuesta;
 };
 
+exports.obtenerProductoPorId = async (id) => {
+  const respuesta = {}
+  const producto = await Producto.findById(id).populate({
+    path: 'variaciones',
+    model: 'Variacion'
+  })
+
+  if (producto) {
+    respuesta.producto = producto
+  } else {
+    respuesta.error = 'No se encontro el producto con id: ' + id
+  }
+  return respuesta
+}
+
 exports.buscarProductos = async (query) => {
   const respuesta = {};
 
