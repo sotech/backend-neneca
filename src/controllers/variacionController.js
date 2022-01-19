@@ -39,10 +39,15 @@ exports.agregarVariacionAlProducto = async (req, res) => {
   const payload = req.body;
   let fileUploaded = false;
   if (req.file) {
+    //Leer archivo segun su path
     pathToFile = path.join(process.cwd() + "/uploads/" + req.file.filename);
+    const img = fs.readFileSync(pathToFile);
+    //Codificar
+    const encode_img = img.toString('base64');
+    //Crear objeto
     payload.image = {
-      data: fs.readFileSync(pathToFile),
-      contentType: "image/png",
+        contentType:req.file.mimetype,
+        data:encode_img
     };
     fileUploaded = true;
   }
@@ -69,10 +74,15 @@ exports.actualizarVariacion = async (req, res) => {
   const payload = req.body;
   let fileUploaded = false;
   if (req.file) {
+    //Leer archivo segun su path
     pathToFile = path.join(process.cwd() + "/uploads/" + req.file.filename);
+    const img = fs.readFileSync(pathToFile);
+    //Codificar
+    const encode_img = img.toString('base64');
+    //Crear objeto
     payload.image = {
-      data: fs.readFileSync(pathToFile),
-      contentType: "image/png",
+        contentType:req.file.mimetype,
+        data:encode_img
     };
     fileUploaded = true;
   }
