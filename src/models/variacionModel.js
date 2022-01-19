@@ -5,7 +5,7 @@ const variacionSchema = mongoose.Schema({
   precio: Number,
   thumbnail: String,
   image: {
-    data: Buffer,
+    data: String,
     contentType: String,
   },
   stock: Number
