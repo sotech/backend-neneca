@@ -29,7 +29,10 @@ exports.agregarProducto = async (payload) => {
 
 exports.obtenerProductos = async () => {
   const respuesta = {};
-  const productos = await Producto.find({});
+  const productos = await Producto.find({}).populate({
+    path:'variaciones',
+    model:'Variacion'
+  });
 
   if (productos.length) {
     respuesta.productos = productos;
