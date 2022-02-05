@@ -9,10 +9,12 @@ const productoRoutes = require('./src/routes/productoRoutes')
 const ordenRoutes = require('./src/routes/ordenRoutes')
 const usuarioRoutes = require('./src/routes/usuarioRoutes')
 const variacionRoutes = require('./src/routes/variacionRoutes')
-const mainRoutes = require('./src/routes/mainRoutes')
+const mainRoutes = require('./src/routes/mainRoutes');
+const multer = require('multer');
 
 app.use(express.json());
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }));
+app.use(multer().any());
 app.use(cors())
 app.use(morgan('dev'));
 
