@@ -8,6 +8,7 @@ const variacionSchema = mongoose.Schema({
     data: String,
     contentType: String,
   },
+  imagenBase64: String,
   stock: Number
 });
 
