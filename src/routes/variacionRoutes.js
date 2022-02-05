@@ -6,8 +6,8 @@ const variacionController = require("../controllers/variacionController");
 
 router.get('/obtener/:idProducto', variacionController.obtenerVariacionesDelProducto);
 router.get('/obtenerVariacion/:idVariacion', variacionController.obtenerVariacion);
-router.post('/agregar/:idProducto', verificarToken, upload.single('image'), variacionController.agregarVariacionAlProducto);
-router.put('/actualizar/:idVariacion', verificarToken, upload.single('image'), variacionController.actualizarVariacion);
+router.post('/agregar/:idProducto', verificarToken, variacionController.agregarVariacionAlProducto);
+router.put('/actualizar/:idVariacion', verificarToken, variacionController.actualizarVariacion);
 router.delete('/eliminar/:idVariacion', verificarToken, variacionController.eliminarVariacion);
 
 module.exports = router;

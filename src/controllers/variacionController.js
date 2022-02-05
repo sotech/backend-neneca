@@ -36,29 +36,24 @@ exports.obtenerVariacion = async (req, res) => {
 
 exports.agregarVariacionAlProducto = async (req, res) => {
   const id = req.params.idProducto;
-  const payload = req.body;
-  let fileUploaded = false;
-  if (req.file) {
-    //Leer archivo segun su path
-    pathToFile = path.join(process.cwd() + "/uploads/" + req.file.filename);
-    const img = fs.readFileSync(pathToFile);
-    //Codificar
-    const encode_img = img.toString('base64');
-    //Crear objeto
+  let payload = req.body;
+  if(req.files[0]){
+    const b64img = req.files[0].buffer.toString("base64");
     payload.image = {
-        contentType:req.file.mimetype,
-        data:encode_img
-    };
-    fileUploaded = true;
+      data: b64img,
+      contentType: req.files[0].mimetype
+    }
   }
   try {
     const respuesta = await variacionAPI.agregarVariacion(id, payload);
     if (respuesta.agregado) {
+      /*
       if (fileUploaded) {
         try {
           fs.unlinkSync(pathToFile);
         } catch {}
       }
+      */
       res
         .status(200)
         .json({ msg: "Variacion agregada", data: respuesta.variacion });
@@ -68,14 +63,12 @@ exports.agregarVariacionAlProducto = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err });
   }
-};
-exports.actualizarVariacion = async (req, res) => {
-  const id = req.params.idVariacion;
-  const payload = req.body;
+  /*
   let fileUploaded = false;
-  if (req.file) {
+  if (req.files[0]) {
     //Leer archivo segun su path
-    pathToFile = path.join(process.cwd() + "/uploads/" + req.file.filename);
+    var pathToFile = path.join(process.cwd() + "/uploads/" + req.files[0].filename);
+    
     const img = fs.readFileSync(pathToFile);
     //Codificar
     const encode_img = img.toString('base64');
@@ -86,14 +79,46 @@ exports.actualizarVariacion = async (req, res) => {
     };
     fileUploaded = true;
   }
+  */
+};
+exports.actualizarVariacion = async (req, res) => {
+  const id = req.params.idVariacion;
+  const payload = req.body;
+  if(req.files[0]){    
+      const b64img = req.files[0].buffer.toString("base64");
+      const image = {
+        data: b64img,
+        contentType: req.files[0].mimetype
+      };
+      payload.image = image
+    
+  }
+  /*
+  let fileUploaded = false;
+  if (req.files[0]) {
+    //Leer archivo segun su path
+    var pathToFile = path.join(process.cwd() + "/uploads/" + req.file[0].filename);
+    const img = fs.readFileSync(pathToFile);
+    //Codificar
+    const encode_img = img.toString('base64');
+    //Crear objeto
+    payload.image = {
+        contentType:req.file.mimetype,
+        data:encode_img
+    };
+    fileUploaded = true;
+  }
+  */
   try {
     const respuesta = await variacionAPI.actualizarVariacion(id, payload);
     if (respuesta.actualizado) {
+      /*
       if (fileUploaded) {
         try {
           fs.unlinkSync(pathToFile);
         } catch {}
       }
+      */
       res.status(200).json({ msg: "Variacion actualizada" });
     } else {
       res.status(404).json({ error: respuesta.error });
@@ -115,3 +140,4 @@ exports.eliminarVariacion = async (req, res) => {
     res.status(500).json({ error: err });
   }
 };
+
