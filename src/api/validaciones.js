@@ -68,15 +68,15 @@ exports.validarOrden = (data) =>{
     }
   }
   //Datos personales
-  if(!data.nombre_comprador){
+  if(!data.nombreComprador){
     validacion.valido = false;
     validacion.errores += "Falta nombreComprador"
   }
-  if(!data.direccion_envio){
+  if(!data.direccionEnvio){
     validacion.valido = false;
     validacion.errores += "Falta direccionEnvio"
   }
-  if (!data.email_comprador) {
+  if (!data.emailComprador) {
     validacion.valido = false;
     validacion.errores += "Falta emailComprador"
   }

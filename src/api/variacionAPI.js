@@ -117,12 +117,13 @@ exports.eliminarVariacion = async (id) => {
 
 exports.actualizarStock = async (id, cantidad) => {
   try {
+    console.log(id);
     const variacion = await Variacion.findOne({ _id: id });
-
+    
     const variacionActualizada = await Variacion.updateOne(
       { _id: id },
       {
-        $set: { stock: producto.stock - cantidad },
+        $set: { stock: variacion.stock - cantidad },
       }
     );
   } catch (err) {
