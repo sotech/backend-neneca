@@ -3,7 +3,7 @@
 const Orden = require("../models/ordenModel");
 const variacionAPI = require("./variacionAPI")
 const validaciones = require("./validaciones");
-const ORDEN_ESTADOS = require('./ordenEstados');
+const {ESTADOS} = require('./ordenEstados');
 
 exports.agregarOrden = async payload => {
   const validacion = validaciones.validarOrden(payload)
@@ -14,7 +14,7 @@ exports.agregarOrden = async payload => {
     const orden = {
       timestamp: new Date(),
       pedidos,
-      estado: ORDEN_ESTADOS.INCOMPLETO
+      estado: ESTADOS.INCOMPLETO
     };
     try {
       const nuevaOrden = await Orden.create(orden);
