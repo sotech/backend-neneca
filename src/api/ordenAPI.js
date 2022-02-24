@@ -18,9 +18,9 @@ exports.agregarOrden = async payload => {
     };
     try {
       const nuevaOrden = await Orden.create(orden);
-      /*nuevaOrden.pedidos.forEach(async pedido => {
+      nuevaOrden.pedidos.forEach(async pedido => {
         const stockActualizado = await variacionAPI.actualizarStock(pedido.item, pedido.cantidad)
-      })*/
+      })
       respuesta.creado = true;
       respuesta.orden = nuevaOrden;
 
@@ -101,12 +101,10 @@ exports.eliminarOrden = async id => {
 
   try {
     const orden = await Orden.findOne({ "_id": id })
-    const ordenEliminada = await Orden.deleteOne({ "_id": id })
-    /*
     orden.pedidos.forEach(async pedido => {
-      const stockActualizado = await variacionAPI.actualizarStock(pedido.item, -pedido.cantidad)
+      await variacionAPI.actualizarStock(pedido.item, -pedido.cantidad)
     })
-    */
+    await Orden.deleteOne({ "_id": id })    
     respuesta.eliminado = true
   } catch (err) {
     respuesta.eliminado = false

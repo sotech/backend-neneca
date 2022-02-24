@@ -61,7 +61,6 @@ exports.actualizarOrden = async (req, res) => {
 
 exports.eliminarOrden = async (req, res) => {
   const id = req.params.id
-
   try {
     const respuesta = await ordenAPI.eliminarOrden(id)
     if (respuesta.eliminado) {
